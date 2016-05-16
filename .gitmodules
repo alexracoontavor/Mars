@@ -1,0 +1,3 @@
+[submodule "ScreensModule"]
+	path = ScreensModule
+	url = git@github.com:alexracoontavor/ScreensModule.git
