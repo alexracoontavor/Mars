@@ -1,0 +1,398 @@
+{
+	"Resources":
+	{
+		"Power":{},
+		"Fuel":{},
+		"Methane":{},
+		"Oxygen":{},
+		"Regolith":{},
+		"Cleared Space":{},
+		"Protected Space":{},
+		"Brick":{},
+		"Iron Ore":{},
+		"Iron":{},
+		"Magnesium":{},
+		"Carbon":{},
+		"Silicone":{},
+		"Alloy Beams":{},
+		"Alloy Plates":{},
+		"Nitrogen":{},
+		"Water":{},
+		"Fertilizer":{},
+		"Light Machine Parts":{},
+		"Heavy Machine Parts":{},
+		"Micro Electronics":{},
+		"Macro Electronics":{},
+		"Food":{},
+		"Living Space":{},
+		"People":{},
+		"Stress":{},
+		"Health":{},
+		"Labor":{},
+		"Machine Assembly Time":{},
+		"Exploration Capacity":{},
+		"Research":{},
+		"Disassembled Nuclear Plant":{},
+		"Disassembled Air Miner":{},
+		"Disassembled Fuel Production Facility":{},
+		"Disassembled Surface Scraper":{},
+		"Disassembled Remote Lab":{},
+		"Medicine":{}
+	},
+	"Vehicles":
+	{
+		"MARV":
+		{
+			"Construction":
+			{
+				"Alloy Beams":100,
+				"Alloy Plate":100,
+				"Heavy Machine Parts":100,
+				"Light Machine Parts":100,
+				"Macro Electronics":100,
+				"Micro Electronics":100,
+				"Machine Assembly Time":100,
+				"Labor":100
+			},
+			"Operation":
+			{
+				"Fuel":100
+			},
+			"Production":
+			{
+				"Labor":1
+			}
+		},
+		"Surface Scraper":
+		{
+			"Construction":
+			{
+				"Alloy Beams":100,
+				"Alloy Plate":100,
+				"Heavy Machine Parts":100,
+				"Light Machine Parts":100,
+				"Macro Electronics":100,
+				"Micro Electronics":100,
+				"Machine Assembly Time":100,
+				"Labor":100
+			},
+			"Operation":
+			{
+				"Fuel":100
+			},
+			"Production":
+			{
+				"Regolith":100,
+				"Cleared Space":10
+			}
+		},
+		"Unmanned Exploration Rover":
+		{
+			"Construction":
+			{
+				"Alloy Beams":100,
+				"Alloy Plate":100,
+				"Heavy Machine Parts":100,
+				"Light Machine Parts":100,
+				"Macro Electronics":100,
+				"Micro Electronics":100,
+				"Machine Assembly Time":100,
+				"Labor":100
+			},
+			"Operation":
+			{
+				"Fuel":100
+			},
+			"Production":
+			{
+				"Exploration Capacity":10
+			}
+		}
+	},
+	"Buildings":
+	{
+		/*
+		"Regolith Processor":
+		{
+			"Construction":
+			{
+				"Brick":1000,
+				"Alloy Beams":100,
+				"Piping":100,
+				"Transparent Plate":20,
+				"Alloy Plate":100,
+				"Heavy Machine Parts":50,
+				"Light Machine Parts":30,
+				"Macro Electronics":100,
+				"Micro Electronics":50,
+				"Labor":1000
+			},
+			"Operation":
+			{
+				"Power":100,
+				"Regolith":100,
+				"Labor":10
+			},
+			"Production":
+			{
+				"Iron":10,
+				"Water":5,
+				"Sodium":7,
+				"Magnesium":9,
+				"Aluminium":10,
+				"Silicon":5,
+				"Phosphorus":5,
+				"Sulfur":5,
+				"Chlorine":5,
+				"Potassium":5,
+				"Calcium":8,
+				"Titanium":5,
+				"Chromium":5,
+				"Manganese":5,
+				"Nickel":5,
+				"Zinc":5,
+				"Bromine":5
+			}
+		},
+		*/
+		"Regolith Processor":
+		{
+			"Operation":
+			{
+				"Power":100,
+				"Regolith":1000
+			},
+			"Production":
+			{
+				"Iron":10,
+				"Magnesium":10,
+				"Carbon":10,
+				"Silicone":10,
+				"Water":2
+			}
+		},
+		"Air Miner":
+		{
+			"Operation":
+			{
+				"Power":100
+			},
+			"Production":
+			{
+				"Methane":5,
+				"Oxygen":5
+			}
+		},
+		"Nuclear Plant":
+		{
+			"Operation":{},
+			"Production":
+			{
+				"Power":1000
+			}
+		},
+		"Fuel Production Facility":
+		{
+			"Operation":
+			{
+				"Power":100,
+				"Methane":100,
+				"Oxygen":100
+			},
+			"Production":
+			{
+				"Fuel":100
+			}
+		},
+		"Remote Lab":
+		{
+			"Operation":
+			{
+				"Power":100
+			},
+			"Production":
+			{
+				"Research":10
+			}
+		},
+		"Brick Factory":
+		{
+			"Operation":
+			{
+				"Power":100,
+				"Regolith":100,
+				"Water":100,
+				"Labor":10
+			},
+			"Production":
+			{
+				"Brick":10
+			}
+		},
+		"Smelter":
+		{
+			"Operation":
+			{
+				"Power":500,
+				"Iron":100,
+				"Magnesium":100,
+				"Carbon":100,
+				"Labor":10
+			},
+			"Production":
+			{
+				"Alloy Beams":10,
+				"Alloy Plate":10
+			}
+		},
+		"Fertilizer Plant":
+		{
+			"Operation":
+			{
+				"Power":100,
+				"Nitrogen":100,
+				"Water":100,
+				"Carbon":10,
+				"Labor":10
+			},
+			"Production":
+			{
+				"Fertilizer":30,
+			}
+		},
+		"Hydroponic Farm":
+		{
+			"Operation":
+			{
+				"Power":300,
+				"Water":500,
+				"Fertilizer":20,
+				"Labor":50
+			},
+			"Production":
+			{
+				"Food":30,
+			}
+		},
+		"Living Quarters":
+		{
+			"Operation":
+			{
+				"Power":300,
+				"Water":100
+			},
+			"Production":
+			{
+				"Living Space":10,
+			}
+		},
+		"Medical Bay":
+		{
+			"Operation":
+			{
+				"Power":300,
+				"Water":100,
+				"Medicine":5,
+				"Labor":10
+			},
+			"Production":
+			{
+				"Health":10
+			}
+		}
+	},
+	"Research":
+	{
+		"Regolith Utilization I":
+		{
+			"Requirements":{},
+			"Costs":
+			{
+				"Research":100
+			},
+			"Results":
+			{
+				"Buildings":
+				{
+					"Regolith Processor":
+					{
+						"Production":
+						{
+							"Water":2,
+							"Nitrogen":2
+						}
+					}
+				}
+			}
+		},
+		"Atmosphere Utilization I":
+		{
+			"Requirements":
+			{	
+				"Research":
+				{
+					"Regolith Utilization I":{}
+				}
+			},
+			"Costs":
+			{
+				"Research":100
+			},
+			"Results":
+			{
+				"Buildings":
+				{
+					"Air Miner":
+					{
+						"Production":
+						{
+							"Inert Gasses":1,
+							"Nitrogen":1
+						}
+					}
+				}
+			}
+		}
+	},
+	"Actions":
+	{
+		"Scan Area":
+		{
+			"Requirements":{},
+			"Costs":
+			{
+				"Labor":100
+			}
+		},
+		"Construct Protected Space":
+		{
+			"Requirements":
+			{
+				"Cleared Space":">= 10"
+			},
+			"Costs":
+			{
+				"Labor":100,
+				"Cleared Space":-10
+			},	
+			"Results":
+			{
+				"Protected Space":10
+			}
+		}
+	},
+	"Events":
+	{
+
+	}
+
+	/*
+		Dynamic missions:
+			Scan area (select on map)
+			Assemble "Disassembled" resources
+			Convert Space to Protected Space
+		Map:
+			Preplaced drops
+			Resource concentrations
+	*/
+}
