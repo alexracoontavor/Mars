@@ -1,9 +1,15 @@
 ﻿using SimpleJSON;
 using System.Collections.Generic;
 using System;
+using Diwip.Tools.Events;
 
 public static class DataPopulator
 {
+    public class DataPopulationCompleteEvent:BaseEvent
+    {
+
+    }
+
     public class RequirementElement
     {
         public string RequirementType; //History or Resource
@@ -12,10 +18,12 @@ public static class DataPopulator
         public float ComparisonValue;
     }
 
-    public class ChangeElement
+    public class ResultData
     {
-        public DataElement AffectedElement;
-        public float AffectValue;
+        public Dictionary<string, DataPopulator.ResourceData> Resources;
+        public Dictionary<string, DataPopulator.VehiclesData> Vehicles;
+        public Dictionary<string, DataPopulator.BuildingsData> Buildings;
+        public Dictionary<string, DataPopulator.ResearchData> Research;
     }
 
     public class DataElement
@@ -61,7 +69,7 @@ public static class DataPopulator
         }
 
         public List<ResourceData> Construction;
-        public List<ChangeElement> Results;
+        public ResultData Result;
         public List<RequirementElement> Requirements;
     }
 
@@ -71,13 +79,18 @@ public static class DataPopulator
     {
         List<string> dataKeys = jsonData.AsObject.GetKeys();
 
-        PopulateResources(jsonData["Resources"]);
-        PopulateVehicles(jsonData["Vehicles"]);
-        PopulateBuildings(jsonData["Buildings"]);
-        PopulateResearch(jsonData["Research"]);
+        StaticData.Resources = PopulateResources(jsonData["Resources"]);
+        StaticData.Vehicles = PopulateVehicles(jsonData["Vehicles"]);
+        StaticData.Buildings = PopulateBuildings(jsonData["Buildings"]);
+        StaticData.Research = PopulateResearch(jsonData["Research"]);
+
+        //TODO - decide upon and implement actions
+        UnityEngine.Debug.Log("Parsing complete");
+
+        EventsManager.Dispatch(new DataPopulationCompleteEvent());
     }
 
-    private static void PopulateResearch(JSONNode jsonData)
+    private static Dictionary<string, DataPopulator.ResearchData> PopulateResearch(JSONNode jsonData)
     {
         Dictionary<string, DataPopulator.ResearchData> Research = new Dictionary<string, ResearchData>();
 
@@ -88,14 +101,14 @@ public static class DataPopulator
             ResearchData r = new ResearchData { Name = key };
             r.Construction = PopulateResourceValue(jsonData[key]["Costs"]);
             r.Requirements = PopulateRequirements(jsonData[key]["Requirements"]);
-            r.Results = PopulateResults(jsonData[key]["Results"]);
+            r.Result = PopulateResults(jsonData[key]["Results"]);
             Research.Add(key, r);
         }
 
-        StaticData.Research = Research;
+        return Research;
     }
 
-    private static void PopulateBuildings(JSONNode jsonData)
+    private static Dictionary<string, BuildingsData> PopulateBuildings(JSONNode jsonData)
     {
         Dictionary<string, DataPopulator.BuildingsData> Buildings = new Dictionary<string, BuildingsData>();
 
@@ -110,10 +123,10 @@ public static class DataPopulator
             Buildings.Add(key, b);
         }
 
-        StaticData.Buildings = Buildings;
+        return Buildings;
     }
 
-    private static void PopulateVehicles(JSONNode jsonData)
+    private static Dictionary<string, VehiclesData> PopulateVehicles(JSONNode jsonData)
     {
         Dictionary<string, DataPopulator.VehiclesData> Vehicles = new Dictionary<string, VehiclesData>();
 
@@ -128,10 +141,10 @@ public static class DataPopulator
             Vehicles.Add(key, v);
         }
 
-        StaticData.Vehicles = Vehicles;
+        return Vehicles;
     }
 
-    private static void PopulateResources(JSONNode jsonData)
+    private static Dictionary<string, ResourceData> PopulateResources(JSONNode jsonData)
     {
         Dictionary<string, DataPopulator.ResourceData> Resources = new Dictionary<string, ResourceData>();
 
@@ -142,7 +155,7 @@ public static class DataPopulator
             Resources.Add(key, new ResourceData { Name = key });
         }
 
-        StaticData.Resources = Resources;
+        return Resources;
     }
 
     private static List<ResourceData> PopulateResourceValue(JSONNode jsonData)
@@ -163,30 +176,41 @@ public static class DataPopulator
     {
         List<RequirementElement> answer = new List<RequirementElement>();
 
-        List<string> dataKeys = jsonData.AsObject.GetKeys();
+        answer.AddRange(ExtractRequirements(jsonData, "History"));
+        answer.AddRange(ExtractRequirements(jsonData, "Resources"));
+
+        return answer;
+    }
+    
+    private static List<RequirementElement> ExtractRequirements(JSONNode jsonData, string typeKey)
+    {
+        List<RequirementElement> answer = new List<RequirementElement>();
+
+        JSONNode typeNode = jsonData[typeKey];
+
+        List<string> dataKeys = typeNode.AsObject.GetKeys();
 
         foreach (string key in dataKeys)
         {
             RequirementElement r = new RequirementElement();
-            //TODO - fill this up
+            r.RequirementType = typeKey;
+            r.RequirementName = key;
+            r.ComparisonType = typeNode[key]["Comparison"];
+            r.ComparisonValue = typeNode[key]["Value"].AsFloat;
             answer.Add(r);
         }
 
         return answer;
     }
 
-    private static List<ChangeElement> PopulateResults(JSONNode jsonData)
+    private static ResultData PopulateResults(JSONNode jsonData)
     {
-        List<ChangeElement> answer = new List<ChangeElement>();
+        ResultData answer = new ResultData();
 
-        List<string> dataKeys = jsonData.AsObject.GetKeys();
-
-        foreach (string key in dataKeys)
-        {
-            ChangeElement c = new ChangeElement();
-            //TODO - fill this up
-            answer.Add(c);
-        }
+        answer.Resources =   PopulateResources(jsonData["Resources"]);
+        answer.Vehicles =    PopulateVehicles(jsonData["Vehicles"]);
+        answer.Buildings =   PopulateBuildings(jsonData["Buildings"]);
+        answer.Research =    PopulateResearch(jsonData["Research"]);
 
         return answer;
     }
